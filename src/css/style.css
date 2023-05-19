@@ -1,0 +1,55 @@
+body { 
+    /* cursor: none; */
+    cursor: url('../assets/hummer.png'), auto;
+}
+
+.board{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(67, 64, 64);
+    margin: auto;    
+}
+
+.cell{
+    width: 120px;
+    height: 120px;
+    background-color: rgb(182, 191, 97); 
+    margin: 1px;  
+    border: 1px black;    
+}
+
+.modal_mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+  
+.modal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background: #ebe5e5;
+    padding: 20px;
+    border: 1px #000;
+    left: 40%;
+    top: 30%;
+}
+  
+.modal_msg {
+    font-size: 16px;
+    font-weight: 500;
+    color: #5f6368;
+    line-height: 50px;
+}
+  
+.close_btn {
+    background: orange;
+    text-decoration: none;
+    color: whitesmoke;
+    padding: 10px 20px;
+    border-radius: 2px;
+    margin: 0 auto;
+}
