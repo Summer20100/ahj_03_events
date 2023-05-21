@@ -1,4 +1,6 @@
 {
+  "name": "ahj_03_events",
+  "packageManager": "yarn@3.5.1",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -48,7 +50,6 @@
     "core-js": "^3.22.7",
     "yarn": "^1.22.19"
   },
-  "name": "ahj_02_dom",
   "description": "![CI](https://github.com/Summer20100/ahj_03_events/actions/workflows/web.yml/badge.svg)",
   "version": "1.0.0",
   "main": "index.js",
