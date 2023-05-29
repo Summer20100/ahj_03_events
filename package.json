@@ -3,7 +3,7 @@
   "packageManager": "yarn@3.5.1",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
     "watch-d": "webpack --watch development",
