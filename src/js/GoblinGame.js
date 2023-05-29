@@ -48,7 +48,7 @@ export default class GoblinGame {
           </div>`,
         );
         const clsModalBtn = document.querySelector('.close_btn');
-        clsModalBtn.addEventListener('click', (ev) => ev.target.closest('div.modal_mask').remove());
+        clsModalBtn.addEventListener('click', (ev) => ev.target.closest('div.modal_mask').remove() & location. reload());
       }
       const position = this.goblinSetter();
       this.field.childNodes[position].appendChild(goblin);
@@ -61,6 +61,7 @@ export default class GoblinGame {
     document.body.addEventListener('click', (ev) => {
       if (ev.target.classList.contains('red-head')) {
         this.successShot += 1;
+        ev.target.closest('img.red-head').remove()
       } else if (ev.target.classList.contains('cell')) {
         this.bossShot += 1;
       }
