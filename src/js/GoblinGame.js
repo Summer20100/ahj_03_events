@@ -2,14 +2,14 @@ import image from '../assets/goblin.png';
 
 export default class GoblinGame {
   constructor(boarSize, interval) {
-    this.position = 0;
     this.field = 0;
-    this.boarSize = boarSize
+    this.boarSize = boarSize;
     this.successShot = 0;
     this.bossShot = 0;
     this.rounds = 0;
     this.gameResults = document.createElement('p');
     this.interval = interval;
+    this.lastPosition = 0;
 
     this.imageGoblin = new Image();
     this.imageGoblin.src = image;
@@ -17,7 +17,12 @@ export default class GoblinGame {
   }
 
   goblinSetter() {
-    return Math.floor(Math.random() * (this.boarSize ** 2));
+    const position = Math.floor(Math.random() * (this.boarSize ** 2));
+    if (position === this.lastPosition) {
+      const position2 = this.goblinSetter();
+      return position2;
+    }
+    return position;
   }
 
   boardGeneration() {
@@ -35,11 +40,18 @@ export default class GoblinGame {
     document.body.appendChild(this.gameResults);
   }
 
-  setInterval(interval) {
-    const intervalId  = setInterval(() => {
+  setTimeout(interval) {
+    const intervalId = setTimeout(function run() {
+      setTimeout(run, interval);
+      this.lastPosition = this.goblinSetter();
+      this.field.childNodes[this.lastPosition].appendChild(this.imageGoblin);
+      this.rounds += 1;
+      this.gameResults.textContent = `Число поподаний: ${this.successShot} / Число промахов: ${this.bossShot} / Всего раз перебежал гоблин: ${this.rounds}`;
+
       if (this.bossShot > 4) {
-        clearInterval(intervalId);
-        document.body.insertAdjacentHTML('beforeEnd',
+        clearTimeout(intervalId);
+        document.body.insertAdjacentHTML(
+          'beforeEnd',
           `<div class="modal_mask">
             <div class="modal">
               <div class="modal_msg">В следующий раз обязятельно получится</div>
@@ -50,25 +62,23 @@ export default class GoblinGame {
         const closeBtn = document.querySelector('.close_btn');
         closeBtn.addEventListener('click', (ev) => {
           ev.target.closest('div.modal_mask').remove();
-        })
+          location.reload();
+        });
       }
-
-      const position = this.goblinSetter();
-      this.field.childNodes[position].appendChild(this.imageGoblin);
-      this.rounds += 1;
-      this.gameResults.textContent = `Число поподаний: ${this.successShot} / Число промахов: ${this.bossShot} / Всего раз перебежал гоблин: ${this.rounds}`
-    }, interval)
+    }, interval);
   }
 
   shootsRecorder() {
-    this.setInterval(this.interval);
+    this.setTimeout(this.interval);
     document.body.addEventListener('click', (ev) => {
       if (ev.target.classList.contains('red-head')) {
+        this.setTimeout(this.interval);
         this.successShot += 1;
-        this.setInterval(this.interval);
+        this.gameResults.textContent = `Число поподаний: ${this.successShot} / Число промахов: ${this.bossShot} / Всего раз перебежал гоблин: ${this.rounds}`;
+        this.setTimeout(this.interval);
       } else if (ev.target.classList.contains('cell')) {
         this.bossShot += 1;
-        this.setInterval(this.interval);
+        this.gameResults.textContent = `Число поподаний: ${this.successShot} / Число промахов: ${this.bossShot} / Всего раз перебежал гоблин: ${this.rounds}`;
       }
     });
   }
