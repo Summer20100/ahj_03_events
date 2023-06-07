@@ -41,15 +41,13 @@ export default class GoblinGame {
   }
 
   setTimeout(interval) {
-    const intervalId = setTimeout(function run() {
-      setTimeout(run, interval);
+    const intervalId = setInterval(() => {
       this.lastPosition = this.goblinSetter();
       this.field.childNodes[this.lastPosition].appendChild(this.imageGoblin);
       this.rounds += 1;
       this.gameResults.textContent = `Число поподаний: ${this.successShot} / Число промахов: ${this.bossShot} / Всего раз перебежал гоблин: ${this.rounds}`;
-
       if (this.bossShot > 4) {
-        clearTimeout(intervalId);
+        clearInterval(intervalId);
         document.body.insertAdjacentHTML(
           'beforeEnd',
           `<div class="modal_mask">
@@ -69,13 +67,13 @@ export default class GoblinGame {
   }
 
   shootsRecorder() {
-    this.setTimeout(this.interval);
+    const intervalId = this.setTimeout(this.interval);
+    console.log(intervalId);
     document.body.addEventListener('click', (ev) => {
       if (ev.target.classList.contains('red-head')) {
-        this.setTimeout(this.interval);
+        ev.target.remove();
         this.successShot += 1;
         this.gameResults.textContent = `Число поподаний: ${this.successShot} / Число промахов: ${this.bossShot} / Всего раз перебежал гоблин: ${this.rounds}`;
-        this.setTimeout(this.interval);
       } else if (ev.target.classList.contains('cell')) {
         this.bossShot += 1;
         this.gameResults.textContent = `Число поподаний: ${this.successShot} / Число промахов: ${this.bossShot} / Всего раз перебежал гоблин: ${this.rounds}`;
